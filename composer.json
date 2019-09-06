@@ -1,0 +1,17 @@
+{
+    "name": "telsa/blizzard-connection",
+    "description": "This bundle provides connection to the Blizzard APIs for all Telsa projects",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nathan O'Reilly",
+            "email": "nathan.oreilly@yahoo.co.uk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Telsa\\BlizzardConnection\\": "src/"
+        }
+    }
+}

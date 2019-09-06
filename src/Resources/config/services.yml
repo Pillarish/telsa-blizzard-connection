@@ -1,0 +1,31 @@
+# Learn more about services, parameters and containers at
+# https://symfony.com/doc/current/service_container.html
+parameters:
+    telsa_blizzard_connection.client_id:
+    telsa_blizzard_connection.client_secret:
+
+services:
+
+    telsa_blizzard_connection.apis.world_of_warcraft.character_profile_api:
+        class: Telsa\BlizzardConnection\Apis\WorldOfWarcraft\CharacterProfileApi
+        autowire: false
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "%telsa_blizzard_connection.client_id%"
+            - "%telsa_blizzard_connection.client_secret%"
+
+    telsa_blizzard_connection.apis.world_of_warcraft.realm_status_api:
+        class: Telsa\BlizzardConnection\Apis\WorldOfWarcraft\RealmStatusApi
+        autowire: false
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "%telsa_blizzard_connection.client_id%"
+            - "%telsa_blizzard_connection.client_secret%"
+
+    # Aliases to allow for autowiring
+
+    Telsa\BlizzardConnection\Apis\WorldOfWarcraft\RealmStatusApi:
+        alias: telsa_blizzard_connection.apis.world_of_warcraft.realm_status_api
+
+    Telsa\BlizzardConnection\Apis\WorldOfWarcraft\CharacterProfileApi:
+        alias: telsa_blizzard_connection.apis.world_of_warcraft.character_profile_api
