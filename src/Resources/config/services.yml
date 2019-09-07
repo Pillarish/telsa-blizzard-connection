@@ -1,9 +1,5 @@
 # Learn more about services, parameters and containers at
 # https://symfony.com/doc/current/service_container.html
-parameters:
-    telsa_blizzard_connection.client_id:
-    telsa_blizzard_connection.client_secret:
-
 services:
 
     telsa_blizzard_connection.apis.world_of_warcraft.character_profile_api:
