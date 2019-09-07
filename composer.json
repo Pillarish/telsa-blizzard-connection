@@ -8,5 +8,10 @@
             "name": "Nathan O'Reilly",
             "email": "nathan.oreilly@yahoo.co.uk"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Telsa\\BlizzardConnection\\": "src"
+        }
+    }
 }
