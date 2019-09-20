@@ -6,9 +6,9 @@ use Telsa\BlizzardConnection\Apis\BlizzardConnection;
 
 class CharacterProfileApi extends BlizzardConnection
 {
-	private $endPoint = "/wow/character/";
+	private $endPoint = "/profile/wow/character/";
 
-	protected $apiName = "wow_community";
+	protected $apiName = "character_profile";
 
     /**
      * @var string
@@ -20,37 +20,23 @@ class CharacterProfileApi extends BlizzardConnection
      */
 	private $realm;
 
-	public function getCharacter($fields = array())
+	public function getCharacterProfile()
 	{
-        return $this->actionRequest($this->generateEndpoint(), array(
-			"fields" => implode(",", $fields)
-		));
+        return $this->actionRequest($this->generateEndpoint(), []);
 	}
 
-	public function getCharacterMounts()
-	{
-        return $this->actionRequest($this->generateEndpoint(), array(
-			"fields" => "mounts"
-		));
-	}
-
-	public function getCharacterTalents()
-	{
-        return $this->actionRequest($this->generateEndpoint(), array(
-			"fields" => "talents"
-		));
-	}
-
-	public function getCharacterForMountPlanner()
-	{
-	    return $this->actionRequest($this->generateEndpoint(), array(
-			"fields" => "mounts,talents"
-		));
-	}
-
-	private function generateEndpoint()
+    public function getCharacterAchievements()
     {
-        return $this->endPoint . urlencode($this->realm) . "/" . urlencode($this->characterName);
+        return $this->actionRequest($this->generateEndpoint('achievements'), []);
+    }
+
+    /**
+     * @param string $endpoint
+     * @return string
+     */
+	private function generateEndpoint(string $endpoint = '')
+    {
+        return $this->endPoint . urlencode($this->realm) . "/" . urlencode($this->characterName) . "/" . urlencode($endpoint);
     }
 
     /**
