@@ -83,12 +83,6 @@ abstract class BlizzardConnection
 		// Set the OAuth 2 header
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , "Authorization: Bearer " . $this->getAuthorisation()->getAccessToken()));
 
-		// only for use from within the totemic proxy
-		if ($this->proxyRequired()) {
-			curl_setopt($curl, CURLOPT_PROXY, 'srukproxy01.totemic.local');
-			curl_setopt($curl, CURLOPT_PROXYPORT, 3128);
-		}
-
 		// run the request
 		$output = curl_exec($curl);
 
@@ -163,12 +157,6 @@ abstract class BlizzardConnection
 
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $url_params);
 
-		// only for use from within the totemic proxy
-		if ($this->proxyRequired()) {
-			curl_setopt($curl, CURLOPT_PROXY, 'srukproxy01.totemic.local');
-			curl_setopt($curl, CURLOPT_PROXYPORT, 3128);
-		}
-
 		// run the request
 		$output = curl_exec($curl);
 
@@ -177,15 +165,5 @@ abstract class BlizzardConnection
 		$newToken = OAuthToken::createToken($output, $this->apiName . "_" . $this->region->getName(), $time);
 
 		return $newToken;
-	}
-
-	private function proxyRequired()
-	{
-		if (getenv("APPLICATION_ENV") === "totemic") {
-		    // For now my PC has been exempted from the proxy, so no need for this
-            // Just change this back to return true if that ever gets changed
-			return false;
-		}
-		return false;
 	}
 }
