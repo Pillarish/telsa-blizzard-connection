@@ -9,7 +9,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "%telsa_blizzard_connection.client_id%"
             - "%telsa_blizzard_connection.client_secret%"
-            -
+
     telsa_blizzard_connection.apis.world_of_warcraft.character_profile_api:
         class: Telsa\BlizzardConnection\Apis\WorldOfWarcraft\CharacterProfileApi
         autowire: false
@@ -27,7 +27,6 @@ services:
             - "%telsa_blizzard_connection.client_secret%"
 
     # Aliases to allow for autowiring
-
     Telsa\BlizzardConnection\Apis\WorldOfWarcraft\RealmStatusApi:
         alias: telsa_blizzard_connection.apis.world_of_warcraft.realm_status_api
 
