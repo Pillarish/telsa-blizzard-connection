@@ -18,13 +18,17 @@ class TelsaBlizzardConnectionExtension extends Extension
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
 
-        $characterProfileApiDef = $container->getDefinition('telsa_blizzard_connection.apis.world_of_warcraft.character_profile_api');
-        $characterProfileApiDef->setArgument(1, $config['client_id']);
-        $characterProfileApiDef->setArgument(2, $config['client_secret']);
+        $communityCharacterProfileApiDef = $container->getDefinition('telsa_blizzard_connection.apis.world_of_warcraft.community_character_profile_api');
+        $communityCharacterProfileApiDef->setArgument(1, $config['client_id']);
+        $communityCharacterProfileApiDef->setArgument(2, $config['client_secret']);
 
         $realmStatusApiDef = $container->getDefinition('telsa_blizzard_connection.apis.world_of_warcraft.realm_status_api');
         $realmStatusApiDef->setArgument(1, $config['client_id']);
         $realmStatusApiDef->setArgument(2, $config['client_secret']);
+
+        $characterProfileApiDef = $container->getDefinition('telsa_blizzard_connection.apis.world_of_warcraft.character_profile_api');
+        $characterProfileApiDef->setArgument(1, $config['client_id']);
+        $characterProfileApiDef->setArgument(2, $config['client_secret']);
     }
 
 
