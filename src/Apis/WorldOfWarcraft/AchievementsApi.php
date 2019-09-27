@@ -4,13 +4,13 @@ namespace Telsa\BlizzardConnection\Apis\WorldOfWarcraft;
 
 use Telsa\BlizzardConnection\Apis\BlizzardConnection;
 
-class CharacterProfileApi extends BlizzardConnection
+class AchievementsApi extends BlizzardConnection
 {
-	private $endPoint = "profile/wow/character/";
+	private $endPoint = "data/wow/";
 
-	protected $apiName = "character_profile";
+	protected $apiName = "achievement_data";
 
-    protected $namespace = 'profile-eu';
+	protected $namespace = 'static-eu';
 
     /**
      * @var string
@@ -22,14 +22,14 @@ class CharacterProfileApi extends BlizzardConnection
      */
 	private $realm;
 
-	public function getCharacterProfile()
-	{
-        return $this->actionRequest($this->generateEndpoint(), []);
-	}
-
-    public function getCharacterAchievements()
+    public function getAchievementIndex()
     {
-        return $this->actionRequest($this->generateEndpoint('achievements'), []);
+        return $this->actionRequest($this->generateEndpoint('achievement/index'), []);
+    }
+
+    public function getAchievementDetails(int $achievementId)
+    {
+        return $this->actionRequest($this->generateEndpoint('achievement/' . $achievementId), []);
     }
 
     /**
@@ -38,7 +38,7 @@ class CharacterProfileApi extends BlizzardConnection
      */
 	private function generateEndpoint(string $endpoint = '')
     {
-        return $this->endPoint . urlencode($this->realm) . "/" . urlencode($this->characterName) . "/" . urlencode($endpoint);
+        return $this->endPoint . urlencode($endpoint);
     }
 
     /**

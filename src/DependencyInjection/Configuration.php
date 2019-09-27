@@ -13,7 +13,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('telsa_blizzard_connection');
 
         $rootNode->children()
-            ->scalarNode('client_id')->info('Required for connection Blizzard API')->end()
+            ->scalarNode('client_id')->info('Required for connection to Blizzard API')->end()
             ->scalarNode('client_secret')->end()
             ->end();
 

@@ -6,7 +6,7 @@ use Telsa\BlizzardConnection\Apis\BlizzardConnection;
 
 class RealmStatusApi extends BlizzardConnection
 {
-	private $endPoint = "/wow/realm/status";
+	private $endPoint = "wow/realm/status";
 
 	protected $apiName = "wow_community";
 

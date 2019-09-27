@@ -35,6 +35,11 @@ abstract class BlizzardConnection
 	protected $apiName;
 
     /**
+     * @var string
+     */
+	protected $namespace;
+
+    /**
      * @var EntityManagerInterface
      */
 	protected $em;
@@ -63,13 +68,15 @@ abstract class BlizzardConnection
 	}
 
 	/**
-	 * Should be able to make any call to blizzard apis
+	 * For WoW community API where the access token is set as a header
 	 * @param string $endpoint
 	 * @param array $params
 	 * @return string
 	 */
 	final protected function actionRequest($endpoint, array $params)
 	{
+	    $params = array_merge($params, ['locale' => $this->region->getLocale()]);
+
 		$url = sprintf('%s%s?%s', $this->region->getApiBaseUrl(), $endpoint, http_build_query($params));
 
 		// initialise cURL
@@ -80,8 +87,18 @@ abstract class BlizzardConnection
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
-		// Set the OAuth 2 header
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , "Authorization: Bearer " . $this->getAuthorisation()->getAccessToken()));
+		// Set the http headers
+        $httpHeaders = array(
+            'Content-Type: application/json',
+            "Authorization: Bearer " . $this->getAuthorisation()->getAccessToken()
+        );
+
+        // If this is not a connection to a community API then a namespace is required
+        if ($this->apiName !== "wow_community") {
+            $httpHeaders[] = "Battlenet-Namespace: " . $this->namespace;
+        }
+
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $httpHeaders);
 
 		// run the request
 		$output = curl_exec($curl);
@@ -89,6 +106,37 @@ abstract class BlizzardConnection
 		curl_close($curl);
 		return $output;
 	}
+
+    /**
+     * For Game Data and Profile APIs where the access token is a url parameter
+     * @param string $endpoint
+     * @param array $params
+     * @return string
+     */
+    final protected function newActionRequest($endpoint)
+    {
+        $params = [
+            'access_token' => $this->getAuthorisation()->getAccessToken(),
+            'namespace' => $this->region->getNamespace(),
+            'locale' => $this->region->getLocale()
+        ];
+
+        $url = sprintf('%s%s?%s', $this->region->getApiBaseUrl(), $endpoint, http_build_query($params));
+
+        // initialise cURL
+        $curl = curl_init();
+
+        //Set cURL options
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+        // run the request
+        $output = curl_exec($curl);
+
+        curl_close($curl);
+        return $output;
+    }
 
 	/**
 	 * This method will get the OAuth token for the request to use.

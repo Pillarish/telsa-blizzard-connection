@@ -68,4 +68,5 @@ final class EU implements RegionInterface
     {
         return 'https://eu.battle.net';
     }
+
 }
