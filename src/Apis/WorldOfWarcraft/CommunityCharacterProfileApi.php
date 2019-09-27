@@ -6,7 +6,7 @@ use Telsa\BlizzardConnection\Apis\BlizzardConnection;
 
 class CommunityCharacterProfileApi extends BlizzardConnection
 {
-	private $endPoint = "/wow/character/";
+	private $endPoint = "wow/character/";
 
 	protected $apiName = "wow_community";
 
