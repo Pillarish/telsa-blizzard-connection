@@ -9,9 +9,6 @@ use Telsa\BlizzardConnection\Regions\RegionInterface;
 use Telsa\BlizzardConnection\Entity\OAuthToken;
 use Telsa\BlizzardConnection\Regions\US;
 
-// TODO: Add a connection to get the mount master list
-// TODO: Add a connection to get the realm list
-
 abstract class BlizzardConnection
 {
 	/**
@@ -68,7 +65,7 @@ abstract class BlizzardConnection
 	}
 
 	/**
-	 * For WoW community API where the access token is set as a header
+	 * Should be good for all API connections
 	 * @param string $endpoint
 	 * @param array $params
 	 * @return string
@@ -93,8 +90,8 @@ abstract class BlizzardConnection
             "Authorization: Bearer " . $this->getAuthorisation()->getAccessToken()
         );
 
-        // If this is not a connection to a community API then a namespace is required
-        if ($this->apiName !== "wow_community") {
+        // If the api has a namespace
+        if ($this->namespace) {
             $httpHeaders[] = "Battlenet-Namespace: " . $this->namespace;
         }
 
@@ -107,42 +104,10 @@ abstract class BlizzardConnection
 		return $output;
 	}
 
-    /**
-     * For Game Data and Profile APIs where the access token is a url parameter
-     * @param string $endpoint
-     * @param array $params
-     * @return string
-     */
-    final protected function newActionRequest($endpoint)
-    {
-        $params = [
-            'access_token' => $this->getAuthorisation()->getAccessToken(),
-            'namespace' => $this->region->getNamespace(),
-            'locale' => $this->region->getLocale()
-        ];
-
-        $url = sprintf('%s%s?%s', $this->region->getApiBaseUrl(), $endpoint, http_build_query($params));
-
-        // initialise cURL
-        $curl = curl_init();
-
-        //Set cURL options
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
-        // run the request
-        $output = curl_exec($curl);
-
-        curl_close($curl);
-        return $output;
-    }
-
 	/**
 	 * This method will get the OAuth token for the request to use.
 	 * This will first check the database for a current one.
 	 * Then if the current one has expired, get a new one
-	 * @param $region string
 	 * @return OAuthToken
 	 */
 	private function getAuthorisation()
@@ -180,7 +145,6 @@ abstract class BlizzardConnection
 	}
 
 	/**
-	 * @param $region string
 	 * @return string
 	 */
 	public function getNewAuthToken()
