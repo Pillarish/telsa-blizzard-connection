@@ -38,7 +38,7 @@ class CharacterProfileApi extends BlizzardConnection
      */
 	private function generateEndpoint(string $endpoint = '')
     {
-        return $this->endPoint . urlencode($this->realm) . "/" . urlencode($this->characterName) . "/" . urlencode($endpoint);
+        return $this->endPoint . urlencode($this->realm) . "/" . urlencode($this->characterName) . ($endpoint ? '/' . urlencode($endpoint) : '');
     }
 
     /**
