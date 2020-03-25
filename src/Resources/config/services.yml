@@ -34,6 +34,14 @@ services:
             - "%telsa_blizzard_connection.client_id%"
             - "%telsa_blizzard_connection.client_secret%"
 
+    telsa_blizzard_connection.apis.world_of_warcraft.guild_profile_api:
+        class: Telsa\BlizzardConnection\Apis\WorldOfWarcraft\GuildProfileApi
+        autowire: false
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "%telsa_blizzard_connection.client_id%"
+            - "%telsa_blizzard_connection.client_secret%"
+
     # Aliases to allow for autowiring
     Telsa\BlizzardConnection\Apis\WorldOfWarcraft\CommunityCharacterProfileApi:
         alias: telsa_blizzard_connection.apis.world_of_warcraft.community_character_profile_api
@@ -46,3 +54,6 @@ services:
 
     Telsa\BlizzardConnection\Apis\WorldOfWarcraft\RealmStatusApi:
         alias: telsa_blizzard_connection.apis.world_of_warcraft.realm_status_api
+
+    Telsa\BlizzardConnection\Apis\WorldOfWarcraft\GuildProfileApi:
+        alias: telsa_blizzard_connection.apis.world_of_warcraft.guild_profile_api

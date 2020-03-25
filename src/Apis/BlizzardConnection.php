@@ -90,9 +90,9 @@ abstract class BlizzardConnection
             "Authorization: Bearer " . $this->getAuthorisation()->getAccessToken()
         );
 
-        // If the api has a namespace
+        // If the api requires a namespace, build it
         if ($this->namespace) {
-            $httpHeaders[] = "Battlenet-Namespace: " . $this->namespace;
+            $httpHeaders[] = "Battlenet-Namespace: " . $this->namespace . '-' . strtolower($this->region->getName());
         }
 
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $httpHeaders);

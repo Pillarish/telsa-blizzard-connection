@@ -39,6 +39,10 @@ class TelsaBlizzardConnectionExtension extends Extension
         $realmStatusApiDef = $container->getDefinition('telsa_blizzard_connection.apis.world_of_warcraft.realm_status_api');
         $realmStatusApiDef->setArgument(1, $config['client_id']);
         $realmStatusApiDef->setArgument(2, $config['client_secret']);
+
+        $guildProfileApiDef = $container->getDefinition('telsa_blizzard_connection.apis.world_of_warcraft.guild_profile_api');
+        $guildProfileApiDef->setArgument(1, $config['client_id']);
+        $guildProfileApiDef->setArgument(2, $config['client_secret']);
     }
 
 

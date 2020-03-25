@@ -41,12 +41,33 @@ class CommunityCharacterProfileApi extends BlizzardConnection
 		));
 	}
 
+    public function getCharacterQuests()
+    {
+        return $this->actionRequest($this->generateEndpoint(), array(
+            "fields" => "quests"
+        ));
+    }
+
+    public function getCharacterItems()
+    {
+        return $this->actionRequest($this->generateEndpoint(), array(
+            "fields" => "items"
+        ));
+    }
+
 	public function getCharacterForMountPlanner()
 	{
 	    return $this->actionRequest($this->generateEndpoint(), array(
 			"fields" => "mounts,talents"
 		));
 	}
+
+    public function getCharacterForGuildManager()
+    {
+        return $this->actionRequest($this->generateEndpoint(), array(
+            "fields" => "quests,items"
+        ));
+    }
 
 	private function generateEndpoint()
     {
