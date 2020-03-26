@@ -10,7 +10,7 @@ class CharacterProfileApi extends BlizzardConnection
 
 	protected $apiName = "character_profile";
 
-    protected $namespace = 'profile-eu';
+    protected $namespace = 'profile';
 
     /**
      * @var string
@@ -32,13 +32,23 @@ class CharacterProfileApi extends BlizzardConnection
         return $this->actionRequest($this->generateEndpoint('achievements'), []);
     }
 
+    public function getCharacterMounts()
+    {
+        return $this->actionRequest($this->generateEndpoint('collections/mounts'), []);
+    }
+
+    public function getCharacterMedia()
+    {
+        return $this->actionRequest($this->generateEndpoint('character-media'), []);
+    }
+
     /**
      * @param string $endpoint
      * @return string
      */
 	private function generateEndpoint(string $endpoint = '')
     {
-        return $this->endPoint . urlencode($this->realm) . "/" . urlencode($this->characterName) . ($endpoint ? '/' . urlencode($endpoint) : '');
+        return $this->endPoint . urlencode($this->realm) . "/" . urlencode(strtolower($this->characterName)) . ($endpoint ? '/' . urlencode($endpoint) : '');
     }
 
     /**
