@@ -92,7 +92,7 @@ abstract class BlizzardConnection
 
         // If the api has a namespace
         if ($this->namespace) {
-            $httpHeaders[] = "Battlenet-Namespace: " . $this->namespace;
+            $httpHeaders[] = "Battlenet-Namespace: " . $this->namespace . '-' . strtolower($this->region->getName());
         }
 
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $httpHeaders);

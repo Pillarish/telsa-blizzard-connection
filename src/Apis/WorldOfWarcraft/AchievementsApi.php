@@ -10,7 +10,7 @@ class AchievementsApi extends BlizzardConnection
 
 	protected $apiName = "achievement_data";
 
-	protected $namespace = 'static-eu';
+	protected $namespace = 'static';
 
     /**
      * @var string
